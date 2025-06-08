@@ -1,11 +1,14 @@
 package lewisdthall.fourprongedJSONfirefit;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -88,6 +91,17 @@ public class FourProngedActivity extends AppCompatActivity {
 
         });
 
+        getOnBackPressedDispatcher().addCallback( this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                save();
+            }
+        });
+
+        deleteButton.setOnClickListener(v -> {
+
+        });
+
 
 
 
@@ -99,4 +113,15 @@ public class FourProngedActivity extends AppCompatActivity {
 
 
     }
+
+    public void save() {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("fpe", fpe);
+        Toast.makeText(FourProngedActivity.this, "Returning to entity view", Toast.LENGTH_SHORT).show();
+
+
+        setResult(RESULT_OK, resultIntent);
+        finish();
+    }
+
 }

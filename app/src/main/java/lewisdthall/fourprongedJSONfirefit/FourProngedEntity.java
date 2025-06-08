@@ -1,11 +1,13 @@
 package lewisdthall.fourprongedJSONfirefit;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -59,15 +61,13 @@ public class FourProngedEntity implements Serializable {
         return speed;
     }
 
-    public Adapter getAdapter(ArrayList<FourProngedEntity> listedFPEs) {
-        return new Adapter(listedFPEs);
-    }
 
-
-    public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
+    public static class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
         private ArrayList<FourProngedEntity> listedFPEs;
-        public Adapter(ArrayList<FourProngedEntity> listedFPEs) {
+        private final ActivityResultLauncher<Intent> context;
+        public Adapter(ArrayList<FourProngedEntity> listedFPEs, ActivityResultLauncher<Intent> context) {
             this.listedFPEs = listedFPEs;
+            this.context = context;
         }
 
         @NonNull
@@ -94,7 +94,7 @@ public class FourProngedEntity implements Serializable {
                     Intent intent = new Intent(v.getContext(), FourProngedActivity.class);
                     intent.putExtra("requestType", "update");
                     intent.putExtra("fpe", fpe);
-                    v.getContext().startActivity(intent);
+                    context.launch(intent);
                 }
             });
 

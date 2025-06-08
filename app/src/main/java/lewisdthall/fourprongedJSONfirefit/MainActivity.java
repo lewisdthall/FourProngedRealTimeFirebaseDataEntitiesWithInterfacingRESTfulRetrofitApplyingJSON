@@ -6,8 +6,12 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -15,9 +19,16 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    ArrayList<FourProngedEntity> listedFPEs = new ArrayList<>();
+    RecyclerView recyclerView;
+    FourProngedEntity.Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,15 +41,30 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        FireBase.instance();
+        FireBase.auth.signInAnonymously();
 
+        FireBase.ref("FPEs");
+        FireBase.ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listedFPEs.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    listedFPEs.add(dataSnapshot.getValue(FourProngedEntity.class));
+                }
+            }
 
-        FourProngedEntity fpe = new FourProngedEntity("1", Color.rgb(255, 0, 0), Color.rgb(0, 255, 0), 20.0f, 10);
-        ArrayList<FourProngedEntity> listedFPEs = new ArrayList<>();
-        listedFPEs.add(fpe);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-        RecyclerView recyclerView = findViewById(R.id.fpe_recycler);
+            }
+        });
+
+        recyclerView = findViewById(R.id.fpe_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(fpe.getAdapter(listedFPEs));
+        adapter = new FourProngedEntity.Adapter(listedFPEs, this.getFPEResultLauncher);
+        recyclerView.setAdapter(adapter);
+
 
         Button addFPEButton = findViewById(R.id.add_fpe_button);
         addFPEButton.setOnClickListener(new View.OnClickListener() {
@@ -46,11 +72,26 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, FourProngedActivity.class);
                 intent.putExtra("requestType", "create");
-                startActivity(intent);
+                getFPEResultLauncher.launch(intent);
             }
         });
-
-
-
     }
+
+
+
+    public ActivityResultLauncher<Intent> getFPEResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    Intent intent = result.getData();
+
+                    FireBase.ref("FPEs");
+                    FireBase.ref.push().setValue(intent.getSerializableExtra("fpe"));
+
+
+                    listedFPEs.add((FourProngedEntity) intent.getSerializableExtra("fpe"));
+                    adapter.update(listedFPEs);
+                }
+            }
+    );
 }

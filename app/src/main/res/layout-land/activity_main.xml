@@ -26,29 +26,32 @@
         />
 
 
+
     <Button
-        android:id="@+id/add_fpe_button"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
-        android:text="Add FourProngedEntity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
 
-        app:layout_constraintTop_toBottomOf="@id/welcome_text" />
+        android:id="@+id/add_fpe_button"
+        android:text="Add FourProngedEntity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/welcome_text"
+
+        app:layout_constraintVertical_bias="0"
+        />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fpe_recycler"
 
-        android:layout_width="350dp"
-        android:layout_height="400dp"
+        android:layout_width="730dp"
+        android:layout_height="220dp"
 
         android:background="@color/white"
 
+        android:overScrollMode="always"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
 
         app:layout_constraintStart_toStartOf="parent"
 
