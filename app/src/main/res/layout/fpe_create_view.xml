@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:id="@+id/main">
+
+    <Button
+        android:id="@+id/particle_colour_button"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:text="Change Particle Colour"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/background_colour_button" />
+
+    <Button
+        android:id="@+id/background_colour_button"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:text="Change Background Colour"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:labelFor="@id/particle_size_picker"
+
+        android:text="Size"
+        app:layout_constraintEnd_toEndOf="@id/particle_size_picker"
+        app:layout_constraintStart_toStartOf="@id/particle_size_picker"
+
+        app:layout_constraintTop_toBottomOf="@id/particle_colour_button" />
+
+    <NumberPicker
+        android:id="@+id/particle_size_picker"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:value="20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:labelFor="@id/particle_speed_picker"
+
+        android:text="Speed"
+        app:layout_constraintEnd_toEndOf="@id/particle_speed_picker"
+        app:layout_constraintStart_toStartOf="@id/particle_speed_picker"
+
+        app:layout_constraintTop_toBottomOf="@id/particle_colour_button" />
+
+    <NumberPicker
+        android:id="@+id/particle_speed_picker"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:value="10"
+        app:layout_constraintStart_toEndOf="@+id/particle_size_picker"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/go_back_button"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:text="Go Back"
+        app:layout_constraintBottom_toBottomOf="@+id/particle_speed_picker"
+        app:layout_constraintEnd_toStartOf="@+id/delete_button" />
+
+    <Button
+        android:id="@+id/delete_button"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
+
+        android:text="Delete"
+
+        app:layout_constraintBottom_toBottomOf="@+id/go_back_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/go_back_button" />
+
+    <view
+        class="lewisdthall.fourprongedJSONfirefit.Particle$ParticleView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+
+        android:id="@id/particle_view"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/go_back_button"
+
+        app:layout_constraintVertical_bias="0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

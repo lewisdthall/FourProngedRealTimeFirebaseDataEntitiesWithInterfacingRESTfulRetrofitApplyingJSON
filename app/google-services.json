@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1086331470041",
+    "project_id": "fourprongedentity",
+    "storage_bucket": "fourprongedentity.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1086331470041:android:2c5043d23023049b433ec8",
+        "android_client_info": {
+          "package_name": "lewisdthall.FourProngedJSONFirefit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2wXsuBH3M_YhW1Fo3wDstqv5glsf-kjw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
