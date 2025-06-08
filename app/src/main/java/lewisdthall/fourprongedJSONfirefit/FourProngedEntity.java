@@ -66,8 +66,6 @@ public class FourProngedEntity implements Serializable {
 
     public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
         private ArrayList<FourProngedEntity> listedFPEs;
-        private Random random = new Random();
-        private int particleX, particleY;
         public Adapter(ArrayList<FourProngedEntity> listedFPEs) {
             this.listedFPEs = listedFPEs;
         }
@@ -88,8 +86,7 @@ public class FourProngedEntity implements Serializable {
         @Override
         public void onBindViewHolder(@NonNull Holder holder, int position) {
             FourProngedEntity fpe = listedFPEs.get(position);
-            particleX = particleY = 10;
-            holder.particleView.particle(fpe, particleX, particleY);
+            holder.particleView.particle(fpe);
             holder.particleView.setBackgroundColour(fpe.getBackgroundColour());
             holder.particleView.setOnClickListener(new View.OnClickListener() {
                 @Override

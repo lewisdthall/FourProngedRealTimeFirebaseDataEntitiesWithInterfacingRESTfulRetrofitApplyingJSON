@@ -6,15 +6,19 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class FourProngedActivity extends AppCompatActivity {
 
+
+    Random random = new Random();
     FourProngedEntity fpe;
 
     @Override
@@ -31,6 +35,11 @@ public class FourProngedActivity extends AppCompatActivity {
         Button goBackButton = findViewById(R.id.go_back_button);
         Button deleteButton = findViewById(R.id.delete_button);
 
+        sizePicker.setMinValue(0);
+        sizePicker.setMaxValue(30);
+        speedPicker.setMinValue(0);
+        speedPicker.setMaxValue(30);
+
 
 
         if (Objects.equals(getIntent().getStringExtra("requestType"), "create")) {
@@ -40,9 +49,45 @@ public class FourProngedActivity extends AppCompatActivity {
         else if (Objects.equals(getIntent().getStringExtra("requestType"), "update")) {
             fpe = (FourProngedEntity) getIntent().getSerializableExtra("fpe");
             assert fpe != null;
-            particleView.particle(fpe, 10, 10);
+            particleView.particle(fpe);
             particleView.setBackgroundColour(fpe.getBackgroundColour());
         }
+
+        sizePicker.setValue((int) fpe.getSize());
+        speedPicker.setValue((int) fpe.getSpeed());
+
+        sizePicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                fpe.update(fpe.getParticleColour(), fpe.getBackgroundColour(), newVal, fpe.getSpeed());
+                particleView.particle(fpe);
+            }
+        });
+
+        speedPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                fpe.update(fpe.getParticleColour(), fpe.getBackgroundColour(), fpe.getSize(), newVal);
+                particleView.particle(fpe);
+            }
+        });
+
+        backgroundColourButton.setOnClickListener(v -> {
+            int backgroundColour = Color.rgb(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+            fpe.update(fpe.getParticleColour(), backgroundColour, fpe.getSize(), fpe.getSpeed());
+            particleView.setBackgroundColour(backgroundColour);
+        });
+
+        particleColourButton.setOnClickListener(v -> {
+            int particleColour = Color.rgb(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+            fpe.update(particleColour, fpe.getBackgroundColour(), fpe.getSize(), fpe.getSpeed());
+            particleView.particle(fpe);
+        });
+
+        goBackButton.setOnClickListener(v -> {
+
+        });
+
 
 
 

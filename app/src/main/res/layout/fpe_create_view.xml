@@ -50,7 +50,6 @@
 
         android:layout_height="wrap_content"
 
-        android:value="20"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -74,7 +73,6 @@
 
         android:layout_height="wrap_content"
 
-        android:value="10"
         app:layout_constraintStart_toEndOf="@+id/particle_size_picker"
         app:layout_constraintTop_toTopOf="parent" />
 

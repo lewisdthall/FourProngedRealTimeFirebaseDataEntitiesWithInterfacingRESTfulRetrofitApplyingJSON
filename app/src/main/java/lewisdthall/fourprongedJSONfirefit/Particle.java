@@ -44,6 +44,8 @@ public class Particle {
     public static class ParticleView extends View {
         Particle particle = new Particle(Color.WHITE, 20, 10, 10, 10);
         float speedX, speedY;
+        int startX, startY;
+        Random random = new Random();
 
 
 
@@ -63,9 +65,11 @@ public class Particle {
             super(context, attrs, defStyleAttr, defStyleRes);
         }
 
-        public void particle(FourProngedEntity fpe, float x, float y) {
-            particle.update(fpe.getParticleColour(), fpe.getSize(), fpe.getSpeed(), x, y);
-            speedX = new Random().nextInt(100);
+        public void particle(FourProngedEntity fpe) {
+            startX = getWidth() != 0 ? random.nextInt(getWidth()) : 10;
+            startY = getHeight() != 0 ? random.nextInt(getHeight()) : 10;
+            particle.update(fpe.getParticleColour(), fpe.getSize(), fpe.getSpeed(), startX, startY);
+            speedX = random.nextInt(100);
             speedX = 80 > speedX && speedX > 20 ? particle.speed / 100 * speedX : particle.speed / 2;
             speedY = particle.speed - speedX;
         }
