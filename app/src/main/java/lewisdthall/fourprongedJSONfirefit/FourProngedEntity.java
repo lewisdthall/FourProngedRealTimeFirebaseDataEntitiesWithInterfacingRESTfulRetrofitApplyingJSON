@@ -1,7 +1,6 @@
 package lewisdthall.fourprongedJSONfirefit;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class FourProngedEntity implements Serializable {
 
@@ -74,7 +72,7 @@ public class FourProngedEntity implements Serializable {
         @Override
         public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View view = inflater.inflate(R.layout.fpe_card_view, parent, false);
+            View view = inflater.inflate(R.layout.fpe_card, parent, false);
             return new Holder(view);
         }
 
@@ -91,7 +89,7 @@ public class FourProngedEntity implements Serializable {
             holder.particleView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), FourProngedActivity.class);
+                    Intent intent = new Intent(v.getContext(), FourProngedTool.class);
                     intent.putExtra("requestType", "update");
                     intent.putExtra("fpe", fpe);
                     context.launch(intent);
