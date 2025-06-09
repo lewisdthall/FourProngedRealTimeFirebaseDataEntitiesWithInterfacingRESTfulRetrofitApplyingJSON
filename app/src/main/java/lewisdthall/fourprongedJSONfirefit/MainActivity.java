@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -49,8 +50,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listedFPEs.clear();
+                FourProngedEntity fpe;
+                int particleColour, backgroundColour;
+                float size, speed;
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    listedFPEs.add(dataSnapshot.getValue(FourProngedEntity.class));
+
+                    particleColour = dataSnapshot.child("particleColour").getValue(Integer.class);
+                    backgroundColour = dataSnapshot.child("backgroundColour").getValue(Integer.class);
+                    size = dataSnapshot.child("size").getValue(Float.class);
+                    speed = dataSnapshot.child("speed").getValue(Float.class);
+
+                    Toast.makeText(MainActivity.this, "particleColour: " + particleColour, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "backgroundColour: " + backgroundColour, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "size: " + size, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "speed: " + speed, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "key: " + dataSnapshot.getKey(), Toast.LENGTH_SHORT).show();
+
+                    fpe = new FourProngedEntity(
+                            dataSnapshot.getKey(),
+                            particleColour,
+                            backgroundColour,
+                            size,
+                            speed
+                    );
+
+                    listedFPEs.add(fpe);
                 }
             }
 
@@ -59,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
 
         recyclerView = findViewById(R.id.fpe_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
